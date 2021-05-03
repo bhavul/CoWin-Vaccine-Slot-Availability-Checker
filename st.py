@@ -79,6 +79,9 @@ def check():
                             generic_centers.append(new_centre)
                             break
             else:
+                print(f'API call failed...')
+                print(f'response status code : {response.status_code}')
+                print(f'response text : {response.text}')
                 return None, None, None, False
 
     all_centers.extend(covaxin_centers)
