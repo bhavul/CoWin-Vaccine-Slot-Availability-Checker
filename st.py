@@ -3,6 +3,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 import requests
 import pandas as pd
+import time
 
 st.set_page_config(layout="wide")
 
@@ -21,7 +22,7 @@ st.markdown(
 
 def check():
     NUMPERIODS = 4  # check for next 9 days
-    DELHI_DISTRICT_CODES = [141, 145, 140, 146, 147, 143, 144, 149, 150, 142, 148]
+    DELHI_DISTRICT_CODES = [141, 145, 140, 146, 147, 143, 144, 149, 150, 142, 148, 661, 265]
     all_centers = []
     covaxin_centers = []
     covishield_centers = []
@@ -82,6 +83,8 @@ def check():
                 print(f'API call failed...')
                 print(f'response status code : {response.status_code}')
                 print(f'response text : {response.text}')
+                time.sleep(15)
+                print(f'Slept for 15 seconds')
                 return None, None, None, False
 
     all_centers.extend(covaxin_centers)
@@ -117,13 +120,15 @@ async def watch(covaxin_df_container, covishield_df_container, generic_df_contai
             </p>
             """, unsafe_allow_html=True)
         if not is_valid:
-            st.write('Some API error...')    
+            error.write('Some API error...')    
         else:
             # covaxin
             head1.markdown(
                 f"""
                 ## Covaxin Centres
                 """, unsafe_allow_html=True)
+            if covaxin_df.shape[0] > 0:
+                extra.write('# Go go go!! BOOK!!')
             covaxin_df_container.dataframe(covaxin_df)
 
             # covishield
@@ -140,7 +145,7 @@ async def watch(covaxin_df_container, covishield_df_container, generic_df_contai
                 """, unsafe_allow_html=True)
             generic_df_container.dataframe(generic_df)
 
-        r = await asyncio.sleep(2)
+        r = await asyncio.sleep(10)
 
 
 st.markdown(f"""
@@ -149,12 +154,14 @@ st.markdown(f"""
     Written with love by Bhavul.
     """)
 test = st.empty()
+error = st.empty()
 
 container1 = st.beta_container()
 container2 = st.beta_container()
 container3 = st.beta_container()
 
 head1 = container1.empty()
+extra = container1.empty()
 covaxin_df_container = container1.empty()
 
 head2 = container2.empty()
