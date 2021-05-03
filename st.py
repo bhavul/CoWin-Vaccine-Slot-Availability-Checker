@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import requests
 import pandas as pd
 import time
+import pytz
 
 st.set_page_config(layout="wide")
 
@@ -19,6 +20,8 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+IST = pytz.timezone('Asia/Kolkata')
 
 def check():
     NUMPERIODS = 4  # check for next 9 days
@@ -116,11 +119,11 @@ async def watch(covaxin_df_container, covishield_df_container, generic_df_contai
         test.markdown(
             f"""
             <p class="time">
-                Updated at : {str(datetime.now())}
+                Updated at : {str(datetime.now(IST))}
             </p>
             """, unsafe_allow_html=True)
         if not is_valid:
-            error.write('Some API error...')    
+            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')    
         else:
             # covaxin
             head1.markdown(
@@ -129,6 +132,8 @@ async def watch(covaxin_df_container, covishield_df_container, generic_df_contai
                 """, unsafe_allow_html=True)
             if covaxin_df.shape[0] > 0:
                 extra.write('# Go go go!! BOOK!!')
+            else:
+                extra.write('')
             covaxin_df_container.dataframe(covaxin_df)
 
             # covishield
