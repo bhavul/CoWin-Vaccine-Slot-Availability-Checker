@@ -3,3 +3,4 @@ asyncio
 requests
 streamlit
 pytz
+htbuilder
