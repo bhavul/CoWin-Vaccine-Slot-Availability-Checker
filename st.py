@@ -181,9 +181,8 @@ def link(link, text, **style):
 
 
 def layout(*args):
-
     style = """
-    <style>
+    <style>      
       # MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
      .stApp { bottom: 70px; }
@@ -196,7 +195,6 @@ def layout(*args):
         bottom=0,
         margin=px(0, 0, 0, 0),
         width=percent(100),
-        color="black",
         text_align="center",
         height="auto",
         opacity=1
@@ -254,14 +252,6 @@ def footer():
 footer()
 
 district_id_map = get_district_id_map()
-
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 st.markdown(f"""
     # CoWin Vaccine Slots Availability Checker
