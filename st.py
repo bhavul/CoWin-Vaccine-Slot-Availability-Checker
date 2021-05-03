@@ -239,7 +239,7 @@ def footer():
         link("https://twitter.com/BhavulGauri", "@BhavulGauri"),
         " (worth a follow?)",
         br(),
-        "Get yourself and family vaccinated soon. If this tool helps you, kindly donate whatever you can afford to ",
+        "These are tough times. Get yourself and your family vaccinated soon. If this tool helps you, kindly donate whatever you can afford to ",
         link("https://donate.indiacovidresources.in/", "one of the NGOs for covid relief here."),
     ]
     layout(*myargs)
