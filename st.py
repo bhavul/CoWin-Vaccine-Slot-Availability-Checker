@@ -183,7 +183,7 @@ def link(link, text, **style):
 def layout(*args):
     style = """
     <style>      
-      # MainMenu {visibility: hidden;}
+      #MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
      .stApp { bottom: 70px; }
     </style>
