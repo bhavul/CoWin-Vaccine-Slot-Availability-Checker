@@ -100,7 +100,6 @@ def check(list_of_district_ids, min_age_limit):
                 print(f'API call failed...')
                 print(f'response status code : {response.status_code}')
                 print(f'response text : {response.text}')
-                time.sleep(30)
                 print(f'Slept for 30 seconds')
                 return None, None, None, False
 
@@ -138,7 +137,8 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
             </p>
             """, unsafe_allow_html=True)
         if not is_valid:
-            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')    
+            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')
+            time.sleep(30)
         else:
             # covaxin
             head1.markdown(
@@ -161,7 +161,7 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
                 """, unsafe_allow_html=True)
             generic_df_container.dataframe(generic_df)
 
-        time.sleep(15)
+        time.sleep(60)
 
 
 ###########
