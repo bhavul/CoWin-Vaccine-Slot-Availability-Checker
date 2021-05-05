@@ -39,13 +39,13 @@ def get_district_id_map():
 
 
 def check(list_of_district_ids, min_age_limit):
-    NUMPERIODS = 4  # check for next 9 days
+    NUMPERIODS = 2  # check for next 9 days
     all_centers = []
     covaxin_centers = []
     covishield_centers = []
     generic_centers = []
     today_date = datetime.today()
-    date_list = [today_date + timedelta(days=3*x) for x in range(NUMPERIODS)]
+    date_list = [today_date + timedelta(days=6*x) for x in range(NUMPERIODS)]
     date_str_list = [x.strftime("%d-%m-%Y") for x in date_list]
     for district_id in list_of_district_ids:
         for temp_date in date_str_list:
@@ -138,7 +138,8 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
             </p>
             """, unsafe_allow_html=True)
         if not is_valid:
-            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')    
+            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')
+            time.sleep(5)    
         else:
             # covaxin
             head1.markdown(
@@ -244,10 +245,27 @@ def footer():
     ]
     layout(*myargs)
 
+########
+## JS
+########
+
+# """Add this in your streamlit app.py"""
+# GA_JS = """Hello world!"""
+
+# # Insert the script in the head tag of the static template inside your virtual environement
+# index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+# soup = BeautifulSoup(index_path.read_text(), features="lxml")
+# if not soup.find(id='custom-js'):
+#     script_tag = soup.new_tag("script", id='custom-js')
+#     script_tag.string = GA_JS
+#     soup.head.append(script_tag)
+#     index_path.write_text(str(soup))
+
 
 ############
 ## MAIN
-############
+###########
+
 
 footer()
 
