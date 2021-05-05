@@ -129,8 +129,8 @@ def check(list_of_district_ids, min_age_limit):
 
 def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covishield_df_container, generic_df_container, head1, head2, head3, test):
     while True:
-        with st.spinner('Loading new data...'):
-            covaxin_df, covishield_df, generic_df, is_valid = check(list_of_district_ids, min_age_limit)
+        # with st.spinner('Loading new data...'):
+        covaxin_df, covishield_df, generic_df, is_valid = check(list_of_district_ids, min_age_limit)
         test.markdown(
             f"""
             <p class="time">
@@ -138,8 +138,7 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
             </p>
             """, unsafe_allow_html=True)
         if not is_valid:
-            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')
-            time.sleep(5)    
+            error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')    
         else:
             # covaxin
             head1.markdown(
