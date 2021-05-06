@@ -51,7 +51,7 @@ def check(list_of_district_ids, min_age_limit):
         for temp_date in date_str_list:
             url = f"https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={temp_date}"    
             payload={}
-            headers = {}
+            headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"}
             results = []
             response = requests.request("GET", url, headers=headers, data=payload)
             if response.ok and 'centers' in response.json():
@@ -128,8 +128,8 @@ def check(list_of_district_ids, min_age_limit):
 
 def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covishield_df_container, generic_df_container, head1, head2, head3, test):
     while True:
-        # with st.spinner('Loading new data...'):
-        covaxin_df, covishield_df, generic_df, is_valid = check(list_of_district_ids, min_age_limit)
+        with st.spinner('Loading new data...'):
+            covaxin_df, covishield_df, generic_df, is_valid = check(list_of_district_ids, min_age_limit)
         test.markdown(
             f"""
             <p class="time">
@@ -138,7 +138,7 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
             """, unsafe_allow_html=True)
         if not is_valid:
             error.write('Some API error last time an API call was made...Should auto-fix in a minute or so.')
-            time.sleep(30)
+            time.sleep(60)
         else:
             # covaxin
             head1.markdown(
@@ -161,7 +161,7 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
                 """, unsafe_allow_html=True)
             generic_df_container.dataframe(generic_df)
 
-        time.sleep(60)
+        time.sleep(45)
 
 
 ###########
