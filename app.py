@@ -234,6 +234,9 @@ def layout(*args):
 
 def footer():
     myargs = [
+        "These are tough times. Get yourself and your family vaccinated soon. If this tool helps you, kindly donate whatever you can afford to ",
+        link("https://donate.indiacovidresources.in/", "one of the NGOs for covid relief here."),
+        br(),
         "Made with ❤️ by ",
         image("https://mk0hootsuiteblof6bud.kinstacdn.com/wp-content/uploads/2018/09/Twitter_Logo_Blue-310x310.png", width=px(25), height=px(25)),
         link("https://twitter.com/BhavulGauri", "@BhavulGauri"),
@@ -241,9 +244,6 @@ def footer():
         image("https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", width=px(20), height=px(20)),
         " Open sourced ",
         link("https://github.com/bhavul/CoWin-Vaccine-Slot-Availability-Checker", "Here."),
-        br(),
-        "These are tough times. Get yourself and your family vaccinated soon. If this tool helps you, kindly donate whatever you can afford to ",
-        link("https://donate.indiacovidresources.in/", "one of the NGOs for covid relief here."),
     ]
     layout(*myargs)
 
