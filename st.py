@@ -161,7 +161,7 @@ def write_output(list_of_district_ids, min_age_limit, covaxin_df_container, covi
                 """, unsafe_allow_html=True)
             generic_df_container.dataframe(generic_df)
 
-        time.sleep(45)
+        time.sleep(35)
 
 
 ###########
