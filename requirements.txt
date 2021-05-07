@@ -4,3 +4,6 @@ requests
 streamlit
 pytz
 htbuilder
+fastapi
+uvicorn
+cacheout

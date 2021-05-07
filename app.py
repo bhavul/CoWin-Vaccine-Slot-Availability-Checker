@@ -37,10 +37,9 @@ def get_district_id_map():
     return district_id_map
 
 
-
 def check(list_of_district_ids, min_age_limit):
     NUMPERIODS = 2  # check for next 9 days
-    all_centers = []
+    # variables
     covaxin_centers = []
     covishield_centers = []
     generic_centers = []
@@ -49,63 +48,25 @@ def check(list_of_district_ids, min_age_limit):
     date_str_list = [x.strftime("%d-%m-%Y") for x in date_list]
     for district_id in list_of_district_ids:
         for temp_date in date_str_list:
-            url = f"https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={temp_date}"    
+            url = f"http://localhost:8000/check/{min_age_limit}/{district_id}/{temp_date}"    
             payload={}
-            headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"}
+            headers = {}
             results = []
             response = requests.request("GET", url, headers=headers, data=payload)
-            if response.ok and 'centers' in response.json():
+            if response.ok and 'generic_centers' in response.json():
                 json_response = response.json()
-                centers = json_response['centers']
-                for center in centers:
-                    new_centre = {}
-                    if 'sessions' not in center:
-                        continue
-                    name = center['name']
-                    district_name = center['district_name']
-                    pincode = center['pincode']
-                    for session in center['sessions']:
-                        vaccine = session['vaccine']
-                        available_capacity = session['available_capacity']
-                        min_age_limit_session = session['min_age_limit']
-                        date = session['date']
-                        if vaccine == 'COVAXIN' and available_capacity > 0 and min_age_limit_session == min_age_limit:
-                            new_centre['name'] = name
-                            new_centre['district_name'] = district_name
-                            new_centre['pincode'] = pincode
-                            new_centre['vaccine'] = vaccine
-                            new_centre['available_capacity'] = available_capacity
-                            new_centre['date'] = date
-                            covaxin_centers.append(new_centre)
-                            break
-                        elif vaccine == 'COVISHIELD' and available_capacity > 0  and min_age_limit_session == min_age_limit:
-                            new_centre['name'] = name
-                            new_centre['district_name'] = district_name
-                            new_centre['pincode'] = pincode
-                            new_centre['vaccine'] = vaccine
-                            new_centre['available_capacity'] = available_capacity
-                            new_centre['date'] = date
-                            covishield_centers.append(new_centre)
-                            break
-                        elif available_capacity > 0 and min_age_limit_session == min_age_limit:
-                            new_centre['name'] = name
-                            new_centre['district_name'] = district_name
-                            new_centre['pincode'] = pincode
-                            new_centre['vaccine'] = vaccine
-                            new_centre['available_capacity'] = available_capacity
-                            new_centre['date'] = date
-                            generic_centers.append(new_centre)
-                            break
+                covax_centers = json_response['covaxin_centers']
+                covish_centers = json_response['covishield_centers'] 
+                gen_centers = json_response['generic_centers']
+                covaxin_centers.extend(covax_centers)
+                covishield_centers.extend(covish_centers)
+                generic_centers.extend(gen_centers)
             else:
                 print(f'API call failed...')
                 print(f'response status code : {response.status_code}')
                 print(f'response text : {response.text}')
                 print(f'Slept for 30 seconds')
                 return None, None, None, False
-
-    all_centers.extend(covaxin_centers)
-    all_centers.extend(covishield_centers)
-    all_centers.extend(generic_centers)
 
     covaxin_df = pd.DataFrame(covaxin_centers)
     covishield_df = pd.DataFrame(covishield_centers)
