@@ -21,7 +21,7 @@ I used [Streamlit](https://streamlit.io) to build this app. Further this entire 
  
 The entire code is distributed in two files :   
 1. `app.py` -- Actual streamlit file which takes in user inputs and keeps refreshing every 35 seconds with new data. It internally calls a fastapi server whose code is written in the following file.  
-2. `api.py` -- contains a fastapi server implementation of a single API call to CoWin APIs to fetch information for a particular district, date and age limit. The API response gets cached for 30 seconds as well. 
+2. `api.py` -- contains a fastapi server implementation of a single API call to CoWin APIs to fetch information for a particular district, date and age limit. The API response gets cached for 30 seconds as well. Thanks to [@abhidemon](https://github.com/abhidemon) for this idea and some help. 
 
 
 ## How to run
@@ -29,7 +29,8 @@ The entire code is distributed in two files :
 ```
 1. Clone the repository
 2. pip install -r requirements.txt
-3. streamlit run app.py
+3. uvicorn api:app
+4. streamlit run app.py
 ```
 
 
