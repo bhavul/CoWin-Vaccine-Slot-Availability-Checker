@@ -13,14 +13,13 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-@cache.memoize(ttl=30, typed=True)
+@cache.memoize(ttl=90, typed=True)
 def get_from_api_call(min_age_limit, district_id, date):
     # store centres for a district and date
     covaxin_centers = []
     covishield_centers = []
     generic_centers = []
     # make actual API call
-    print(f'HITTING URL THIS TIME...')
     url = f"https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={date}"    
     payload={}
     headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"}
@@ -74,9 +73,7 @@ def get_from_api_call(min_age_limit, district_id, date):
         print(f'API call failed...')
         print(f'response status code : {response.status_code}')
         print(f'response text : {response.text}')
-        print(f'Slept for 30 seconds')
         raise Exception('could not load data')
-
 
 
 
