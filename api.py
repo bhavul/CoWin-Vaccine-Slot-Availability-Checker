@@ -73,7 +73,7 @@ def get_from_api_call(min_age_limit, district_id, date):
         print(f'API call failed...')
         print(f'response status code : {response.status_code}')
         print(f'response text : {response.text}')
-        raise Exception('could not load data')
+        raise HTTPException(status_code=403, detail="Data not found cuz too much traffic.")
 
 
 
