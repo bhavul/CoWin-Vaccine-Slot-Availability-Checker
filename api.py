@@ -13,7 +13,7 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-@cache.memoize(ttl=35, typed=True)
+@cache.memoize(ttl=30, typed=True)
 def get_from_api_call(min_age_limit, district_id, date):
     # store centres for a district and date
     covaxin_centers = []

@@ -19,7 +19,9 @@ Remember you would have to still go to the CoWin website to actually book a slot
 
 I used [Streamlit](https://streamlit.io) to build this app. Further this entire website is possible just because Govt. has opened the Availability checker APIs [here](https://apisetu.gov.in/public/api/cowin). 
  
-Almost entire code relies in `app.py`
+The entire code is distributed in two files :   
+1. `app.py` -- Actual streamlit file which takes in user inputs and keeps refreshing every 35 seconds with new data. It internally calls a fastapi server whose code is written in the following file.  
+2. `api.py` -- contains a fastapi server implementation of a single API call to CoWin APIs to fetch information for a particular district, date and age limit. The API response gets cached for 30 seconds as well. 
 
 
 ## How to run
